@@ -16,13 +16,21 @@
  */
 package org.strangeway.nameof.model;
 
-import org.strangeway.nameof.LangUtils;
-
 import java.util.function.Function;
+
+import static org.strangeway.nameof.LangUtils.nameOfProperty;
 
 public class Person {
     public static String $(Function<Person, ?> bridge) {
-        return LangUtils.nameOfProperty(Person.class, bridge);
+        return nameOfProperty(Person.class, bridge);
+    }
+
+    public static String NAME() {
+        return nameOfProperty(Person.class, Person::getName);
+    }
+
+    public static String SUMMARY() {
+        return nameOfProperty(Person.class, Person::getSummary);
     }
 
     private String name;

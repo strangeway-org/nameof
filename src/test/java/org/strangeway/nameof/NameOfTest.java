@@ -34,6 +34,12 @@ public class NameOfTest {
         assertEquals("name", Person.$(Person::getName));
     }
 
+    @Test
+    public void constants() {
+        assertEquals("summary", Person.SUMMARY());
+        assertEquals("name", Person.NAME());
+    }
+
     @Test(expected = RuntimeException.class)
     public void exception() {
         assertEquals("summary", $$(Person.class, Person::generateSummary));
