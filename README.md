@@ -1,7 +1,7 @@
 Java nameOfProperty implementation
 ==================================
 
-Java alternative to nameOf operator. 
+Java alternative to [nameOf](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/nameof) operator. 
 
 [![license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Download](https://api.bintray.com/packages/strangeway-org/libs/nameof/images/download.svg) ](https://bintray.com/strangeway-org/libs/nameof/_latestVersion)

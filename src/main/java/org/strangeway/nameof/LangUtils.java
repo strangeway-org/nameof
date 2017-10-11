@@ -25,6 +25,10 @@ import java.util.function.Function;
  * Utility class that can provide name of bean property using method reference of a getter.
  */
 public final class LangUtils {
+    public static String nameOf(Class clazz) {
+        return clazz.getName();
+    }
+
     public static <T> String nameOfProperty(Class<T> clazz, Function<? super T, ?> bridge) {
         T extractor = PropertyNames.getPropertyNameExtractor(clazz);
         bridge.apply(extractor);
