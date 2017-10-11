@@ -17,14 +17,10 @@
 package org.strangeway.nameof.impl;
 
 import net.bytebuddy.ByteBuddy;
-import net.bytebuddy.description.modifier.Visibility;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
-import net.bytebuddy.implementation.FieldAccessor;
 import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.matcher.ElementMatchers;
-
-import static net.bytebuddy.matcher.ElementMatchers.named;
 
 public final class PropertyNames {
     public static <T> T getPropertyNameExtractor(Class<T> type) {
@@ -36,16 +32,11 @@ public final class PropertyNames {
         }
 
         Class<?> proxyType = builder
-                .implement(PropertyNameExtractor.class)
-                .defineField("propertyName", String.class, Visibility.PRIVATE)
-                .method(ElementMatchers.any())
+                .method(ElementMatchers.isGetter())
                     .intercept(MethodDelegation.to(PropertyNameExtractorInterceptor.class))
-                .method(named("setPropertyName")
-                        .or(named("getPropertyName")))
-                    .intercept(FieldAccessor.ofBeanProperty())
                 .make()
                 .load(
-                        PropertyNameExtractor.class.getClassLoader(),
+                        PropertyNames.class.getClassLoader(),
                         ClassLoadingStrategy.Default.WRAPPER
                 )
                 .getLoaded();

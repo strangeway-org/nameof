@@ -16,23 +16,31 @@
  */
 package org.strangeway.nameof;
 
-import org.strangeway.nameof.impl.PropertyNameExtractor;
+import org.strangeway.nameof.impl.PropertyNameExtractorInterceptor;
 import org.strangeway.nameof.impl.PropertyNames;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 /**
  * Utility class that can provide name of bean property using method reference of a getter.
  */
 public final class LangUtils {
+    // cached extractors instances
+    private static final Map<Class, Object> extractors = new ConcurrentHashMap<>();
+
     public static String nameOf(Class clazz) {
         return clazz.getName();
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> String nameOfProperty(Class<T> clazz, Function<? super T, ?> bridge) {
-        T extractor = PropertyNames.getPropertyNameExtractor(clazz);
+        T extractor = (T) extractors.computeIfAbsent(clazz, PropertyNames::getPropertyNameExtractor);
+
         bridge.apply(extractor);
-        return ((PropertyNameExtractor) extractor).getPropertyName();
+
+        return PropertyNameExtractorInterceptor.extractMethodName();
     }
 
     public static <T> String $$(Class<T> clazz, Function<T, ?> bridge) {

@@ -16,18 +16,18 @@
  */
 package org.strangeway.nameof.impl;
 
-import net.bytebuddy.implementation.bind.annotation.AllArguments;
 import net.bytebuddy.implementation.bind.annotation.Origin;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
-import net.bytebuddy.implementation.bind.annotation.This;
 
 import java.lang.reflect.Method;
 
 public class PropertyNameExtractorInterceptor {
+
+    private static final ThreadLocal<String> currentExtractedMethodName = new ThreadLocal<>();
+
     @RuntimeType
-    public static Object intercept(@This PropertyNameExtractor extractor, @Origin Method method,
-                                   @AllArguments Object[] args) {
-        extractor.setPropertyName(getPropertyName(method));
+    public static Object intercept(@Origin Method method) {
+        currentExtractedMethodName.set(getPropertyName(method));
 
         if (method.getReturnType() == byte.class) {
             return (byte) 0;
@@ -65,5 +65,11 @@ public class PropertyNameExtractorInterceptor {
         }
 
         return propName;
+    }
+
+    public static String extractMethodName() {
+        String methodName = currentExtractedMethodName.get();
+        currentExtractedMethodName.remove();
+        return methodName;
     }
 }
