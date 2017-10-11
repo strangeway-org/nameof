@@ -17,6 +17,7 @@
 package org.strangeway.nameof.impl;
 
 import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.ClassFileVersion;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import net.bytebuddy.implementation.MethodDelegation;
@@ -24,7 +25,7 @@ import net.bytebuddy.matcher.ElementMatchers;
 
 public final class PropertyNames {
     public static <T> T getPropertyNameExtractor(Class<T> type) {
-        DynamicType.Builder<?> builder = new ByteBuddy()
+        DynamicType.Builder<?> builder = new ByteBuddy(ClassFileVersion.JAVA_V8)
                 .subclass(type.isInterface() ? Object.class : type);
 
         if (type.isInterface()) {
