@@ -26,12 +26,16 @@ public class NameOfTest {
     @Test
     public void direct() {
         assertEquals("name", $$(Person.class, Person::getName));
-        assertEquals("summary", $$(Person.class, Person::getSummary));
     }
 
     @Test
     public void properties() {
         assertEquals("summary", Person.$(Person::getSummary));
         assertEquals("name", Person.$(Person::getName));
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void exception() {
+        assertEquals("summary", $$(Person.class, Person::generateSummary));
     }
 }

@@ -40,6 +40,10 @@ public class Person {
         return summary;
     }
 
+    public String generateSummary() {
+        return "Demo";
+    }
+
     public void setSummary(String summary) {
         this.summary = summary;
     }

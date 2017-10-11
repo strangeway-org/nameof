@@ -48,23 +48,20 @@ public class PropertyNameExtractorInterceptor {
     }
 
     private static String getPropertyName(Method method) {
-        boolean hasGetterSignature = method.getParameterTypes().length == 0
+        boolean canBeGetter = method.getParameterTypes().length == 0
                 && method.getReturnType() != null;
 
-        String name = method.getName();
-        String propName = null;
+        if (canBeGetter) {
+            String name = method.getName();
 
-        if (hasGetterSignature) {
             if (name.startsWith("get")) {
-                propName = name.substring(3, 4).toLowerCase() + name.substring(4);
+                return name.substring(3, 4).toLowerCase() + name.substring(4);
             } else if (name.startsWith("is")) {
-                propName = name.substring(2, 3).toLowerCase() + name.substring(3);
+                return name.substring(2, 3).toLowerCase() + name.substring(3);
             }
-        } else {
-            throw new RuntimeException("Only property getter methods are expected to be passed");
         }
 
-        return propName;
+        throw new RuntimeException("Only property getter methods are expected to be passed");
     }
 
     public static String extractMethodName() {

@@ -32,7 +32,7 @@ public final class PropertyNames {
         }
 
         Class<?> proxyType = builder
-                .method(ElementMatchers.isGetter())
+                .method(ElementMatchers.any())
                     .intercept(MethodDelegation.to(PropertyNameExtractorInterceptor.class))
                 .make()
                 .load(
