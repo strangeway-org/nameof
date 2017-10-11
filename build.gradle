@@ -13,3 +13,12 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
 }
+
+task sourceJar(type: Jar) {
+    from file('src/main/java')
+    classifier = 'sources'
+}
+
+artifacts {
+    archives sourceJar
+}

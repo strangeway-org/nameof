@@ -1,4 +1,4 @@
-package org.strangeway.names.impl;
+package org.strangeway.nameof.impl;
 
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.modifier.Visibility;

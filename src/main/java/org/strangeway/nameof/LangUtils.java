@@ -1,7 +1,7 @@
-package org.strangeway.names;
+package org.strangeway.nameof;
 
-import org.strangeway.names.impl.PropertyNameExtractor;
-import org.strangeway.names.impl.PropertyNames;
+import org.strangeway.nameof.impl.PropertyNameExtractor;
+import org.strangeway.nameof.impl.PropertyNames;
 
 import java.util.function.Function;
 

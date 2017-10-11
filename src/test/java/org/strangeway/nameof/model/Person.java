@@ -1,6 +1,6 @@
-package org.strangeway.names.model;
+package org.strangeway.nameof.model;
 
-import org.strangeway.names.LangUtils;
+import org.strangeway.nameof.LangUtils;
 
 import java.util.function.Function;
 
