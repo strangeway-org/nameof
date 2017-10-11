@@ -1,0 +1,15 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'org.strangeway'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'net.bytebuddy:byte-buddy:1.7.6'
+
+    testCompile 'junit:junit:4.12'
+}
