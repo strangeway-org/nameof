@@ -23,7 +23,11 @@ import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.matcher.ElementMatchers;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 public final class PropertyNames {
+    @SuppressWarnings("unchecked")
     public static <T> T getPropertyNameExtractor(Class<T> type) {
         DynamicType.Builder<?> builder = new ByteBuddy(ClassFileVersion.JAVA_V8)
                 .subclass(type.isInterface() ? Object.class : type);
@@ -34,7 +38,7 @@ public final class PropertyNames {
 
         Class<?> proxyType = builder
                 .method(ElementMatchers.any())
-                    .intercept(MethodDelegation.to(PropertyNameExtractorInterceptor.class))
+                .intercept(MethodDelegation.to(PropertyNameExtractorInterceptor.class))
                 .make()
                 .load(
                         PropertyNames.class.getClassLoader(),
@@ -43,10 +47,9 @@ public final class PropertyNames {
                 .getLoaded();
 
         try {
-            @SuppressWarnings("unchecked")
-            Class<T> typed = (Class<T>) proxyType;
-            return typed.newInstance();
-        } catch (InstantiationException | IllegalAccessException e) {
+            Constructor<?> constructor = proxyType.getConstructor();
+            return (T) constructor.newInstance();
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             throw new RuntimeException(
                     "Couldn't instantiate proxy for method name retrieval", e
             );

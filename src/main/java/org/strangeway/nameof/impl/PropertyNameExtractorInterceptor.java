@@ -48,10 +48,8 @@ public class PropertyNameExtractorInterceptor {
     }
 
     private static String getPropertyName(Method method) {
-        boolean canBeGetter = method.getParameterTypes().length == 0
-                && method.getReturnType() != null;
-
-        if (canBeGetter) {
+        if (method.getParameterTypes().length == 0
+                && method.getReturnType() != Void.TYPE) {
             String name = method.getName();
 
             if (name.startsWith("get")) {

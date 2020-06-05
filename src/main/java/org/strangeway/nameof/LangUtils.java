@@ -28,9 +28,9 @@ import java.util.function.Function;
  */
 public final class LangUtils {
     // cached extractors instances
-    private static final Map<Class, Object> extractors = new ConcurrentHashMap<>();
+    private static final Map<Class<?>, Object> extractors = new ConcurrentHashMap<>();
 
-    public static String nameOf(Class clazz) {
+    public static String nameOf(Class<?> clazz) {
         return clazz.getName();
     }
 
